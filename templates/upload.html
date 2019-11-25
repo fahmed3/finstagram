@@ -1,0 +1,56 @@
+{% extends "index.html" %}
+
+{% block title %}Image Upload {% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Upload an Image!</h1>
+  <div>
+    <form action="/uploadImage" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+	<input type="file" name="imageToUpload" accept="image/*">
+      </div>
+
+      <div class="form-group">
+	<h5> Caption </h5>
+	<textarea class="form-control" name="caption" maxlength="100">  </textarea>
+      </div>
+      
+      <div class="form-check">
+	<h5> Post to: </h5> 
+	<input type="checkbox" class="form-check-input" name="allFollowers" id="all">
+	<label class="form-check-label"> <b> all followers </b> </label> <br>
+	
+	{% for friendGroup in friendGroups %}
+	<input type="checkbox" class="form-check-input" name="friendgroup"
+	       value='{{friendGroup.owner_username}},{{friendGroup.groupName}}'>
+	<label class="form-check-label">
+	  <b> {{friendGroup.groupName}} </b>, created by {{friendGroup.owner_username}}
+	</label> <br>
+	{% endfor %}
+      </div>
+      <button type="submit" value="Upload" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+<script>
+  var all = document.getElementById("all");
+  var allFollowers = false;
+  var groups = document.getElementsByName("friendgroup");
+  
+  var foo = function() {
+      allFollowers = !allFollowers;
+      for(var i = 0; i < groups.length; i++){
+	  groups[i].disabled = allFollowers; //disable groups if allFollowers clicked
+      }
+  }
+
+  all.addEventListener("click", foo);
+</script>
+
+{% if message %}
+     {{ message }}
+{% endif %}
+<br/>
+<a href="/">Go back</a>
+{% endblock %}

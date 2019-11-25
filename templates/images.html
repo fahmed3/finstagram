@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+
+{% block content %}
+<h1>Image Gallery</h1>
+<div class = "container">
+  
+  {% for image in images %}
+  <div class="card" style="width:50%">
+    <h5 class="card-header">{{image.photoPoster}} </h5>
+
+    <img src="/image/{{image.filepath}}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <p class="card-text"> # Likes </p>
+      <h5 class="card-title"> {{ image.photoPoster }} </h5>
+      <p class="card-text"> {{ image.caption }} </p>
+      <p class="card-text"><small class="text-muted">
+	  PhotoID: {{image.photoID}} <br>
+	  {{ image.postingdate }}</small></p>
+    </div>
+  </div>    
+  <!-- <img src="/image/{{image.filepath}}" width="300"/> -->
+  {% endfor %}
+  
+</div>
+<a href="/">Go back</a>
+{% endblock %}
