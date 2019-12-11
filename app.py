@@ -158,7 +158,7 @@ def sendfollow():
             cursor.execute(query, (username, session["username"], 0))
         flash("Follow requested.")
     except pymysql.err.IntegrityError:
-        flash("You've already requested to follow this user.")
+        flash("You've already requested to follow this user or you already follow them.")
     return redirect(url_for("home"))
 
 @app.route("/accept", methods=["GET", "POST"])
@@ -214,7 +214,7 @@ def images():
         with connection.cursor() as cursor:
             cursor.execute(query, (photoID))
         likes = cursor.fetchall()
-        query = "SELECT username FROM tagged WHERE photoID = %s"
+        query = "SELECT username FROM tagged WHERE photoID = %s AND tagstatus = 1"
         with connection.cursor() as cursor:
             cursor.execute(query, (photoID))
         tags = cursor.fetchall()
