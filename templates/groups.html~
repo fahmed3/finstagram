@@ -1,0 +1,10 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+<div class="container text-center" style="padding-top:2em">
+  <h1> View all your groups! </h1> <br>
+  
+</div>
+
+{% endblock %}

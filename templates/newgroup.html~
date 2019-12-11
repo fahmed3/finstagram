@@ -1,0 +1,10 @@
+{% extends "home.html" %}
+
+{% block content %}
+<div class="container" >
+  <h1> Create a new group! </h1>
+  <form action="/createnewgroup" >
+
+  </form>
+</div>
+{% endblock %}

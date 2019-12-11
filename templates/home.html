@@ -1,12 +1,97 @@
 {% extends 'index.html' %}
 
+{% block css %}
+<style>
+  .btn-outline-info:hover{
+      color:#32d4ed;
+  }
+</style>
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-info">
+  <a class="navbar-brand" href="/home">Finsta</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  
+  <div class="collapse navbar-collapse" id="navbarNav" >
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/images"> Images </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/groups"> Groups </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/upload"> Upload </a>
+      </li>
+    </ul>
+    {% block follow %}
+    <form class="form-inline my-2 my-lg-0" style="padding-right:33em" action="/follow" method="POST">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search Username" name="username">
+      <button class="btn btn-outline-info bg-white my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    {% endblock %}
+    <div class="nav-item mr-sm-2">
+      <a class="btn btn-light" href="/logout"> Logout</a>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
 {% block content %}
-<h1>Hello, {{ username }}!</h1>
-<div>
-  <ul>
-    <li><a href="/images">View Images</a></li>
-    <li><a href="/upload">Upload an Image</a></li>
-    <li><a href="/logout">Logout</a></li>
-  </ul>
+
+<div class="container" style="padding-top:2em;">
+  <div class="row">
+    <div class="container col-6" >
+       {% with messages = get_flashed_messages() %}
+           {% if messages %}
+               {% for message in messages %}
+                   <b> {{ message }} </b> <br> <br>
+               {% endfor %}
+           {% endif %}
+       {% endwith %}      
+  
+  <h1>Hello, {{ username }}!</h1> <br>
+  
+  <a href="/images" class="btn btn-lg btn-info"> View images </a>  <br> <br>
+
+  <a href="/groups" class="btn btn-lg btn-info"> Friend Groups </a> <br><br>
+
+  <a href="/upload" class="btn btn-lg btn-info"> Upload an image </a>
+    </div>
+    <div class="container col-6" style="border:solid; height:500px; overflow-y:scroll">
+      <h1 class="text-center"> Followers </h1>
+      <h5> Follow Requests: </h5>
+      {% if requests|length > 0%}
+      {% for request in requests %}
+      <form class="form-inline" action="/accept" method="POST" style="border-bottom:1px solid">
+	<div class="form-group" style="padding:15px 30px">
+	  {{request.firstName}} {{request.lastName}}
+	</div>
+	<button type="submit" name="accept" value='{{request.username_follower}}'
+		class="btn btn-outline-info"> Accept </button>
+	<button type="submit" name="decline" value='{{request.username_follower}}'
+		class="btn btn-outline-info"> Decline </button>
+	</form>      
+
+      {% endfor %}
+      {% else %}
+      <p style="padding:5px 30px"> <i> No follow requests. </i> </p>
+      {% endif %}
+      
+      <h5> Current Followers: </h5>
+      {% if followers|length > 0 %}
+      {% for follower in followers %}
+      <p style="padding:5px 30px">
+	{{follower.firstName}} {{follower.lastName}}</p>
+      {% endfor %}
+      {% else %}
+      <p style="padding:5px 30px"> <i> You currently have no followers. Invite your friends to join Finsta! </i> </p>
+      {% endif %}
+    </div>
+  </div>
+
 </div>
 {% endblock %}

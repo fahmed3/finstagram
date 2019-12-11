@@ -1,10 +1,11 @@
-{% extends "index.html" %}
+
+{% extends "home.html" %}
 
 {% block title %}Image Upload {% endblock %}
 
 {% block content %}
-<div class="container">
-  <h1>Upload an Image!</h1>
+<div class="container" style="padding-top:2em">
+  <h1>Upload an Image!</h1> <br>
   <div>
     <form action="/uploadImage" method="post" enctype="multipart/form-data">
       <div class="form-group">
@@ -29,28 +30,44 @@
 	</label> <br>
 	{% endfor %}
       </div>
-      <button type="submit" value="Upload" class="btn btn-primary">Submit</button>
+      <br>
+      <button type="submit" value="Upload" class="btn btn-info">Submit</button>
     </form>
   </div>
-</div>
-<script>
-  var all = document.getElementById("all");
-  var allFollowers = false;
-  var groups = document.getElementsByName("friendgroup");
-  
-  var foo = function() {
-      allFollowers = !allFollowers;
-      for(var i = 0; i < groups.length; i++){
-	  groups[i].disabled = allFollowers; //disable groups if allFollowers clicked
-      }
-  }
 
-  all.addEventListener("click", foo);
-</script>
+  <!-- Code to disable choice of friend groups if allFollowers checked
+       <script>
+	 var all = document.getElementById("all");
+	 var allFollowers = false;
+	 var groups = document.getElementsByName("friendgroup");
+	 
+	 var foo = function() {
+	 allFollowers = !allFollowers;
+	 for(var i = 0; i < groups.length; i++){
+			    groups[i].disabled = allFollowers; //disable groups if allFollowers clicked
+			    }
+			    }
 
-{% if message %}
-     {{ message }}
-{% endif %}
-<br/>
-<a href="/">Go back</a>
+			    all.addEventListener("click", foo);
+			    </script>
+       -->
+
+       {% with messages = get_flashed_messages() %}
+           {% if messages %}
+               {% for message in messages %}
+                   <b> {{ message }} </b>
+               {% endfor %}
+           {% endif %}
+       {% endwith %}    
+
+       <!-- ^^^ Changed to using flash so I oculd use redirect
+	   {% if message %}
+	       {{ message }}
+	   {% endif %}
+	 -->
+       <br/>
+       <a href="/">Go back</a>
+
+</div> <!-- End of div class= "container"-->
+
 {% endblock %}

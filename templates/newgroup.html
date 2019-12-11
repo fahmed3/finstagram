@@ -1,0 +1,17 @@
+{% extends "home.html" %}
+
+{% block content %}
+<div class="container" style="padding-top:2em">
+  <h1 class="text-center"> Create a new group! </h1> <br>
+  <form action="/createnewgroup" method="POST">
+    <div class="form-group">
+      <input type="text" class="form-control" name="groupName" placeholder="Name of Group"> 
+    </div>
+    <div class="form-group">
+      <textarea class="form-control" name="description" rows="3" placeholder="Write a description for your new group..."></textarea>
+    </div>
+    <button type="submit" class="btn btn-info btn-lg btn-block">
+      Create New Group </button>    
+  </form>
+</div>
+{% endblock %}

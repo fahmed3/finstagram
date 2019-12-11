@@ -1,0 +1,34 @@
+{% extends "home.html" %}
+
+{% block css %}
+<style>
+  .card:hover{
+      border:solid;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top:2em">
+
+  {% if userfound %}
+  <div class="card border-info">
+    <div class="card-header"> {{user.username}} </div>
+    <div class="card-body text-info">
+      <h5 class="card-title">{{user.firstName}} {{user.lastName}}</h5>
+      <p class="card-text"> {{user.bio if user.bio != None else 'This user has no bio'}}</p>
+      <form action="/sendfollow" method="POST">
+	<button type="submit" class="btn btn-info" value='{{user.username}}' name="follow">Follow </button>
+      </form>
+    </div>
+  </div> <br>
+
+  <a href="/home" class="btn btn-outline-info">Return to Home </a>
+  {% else %}
+  <h1> User not found :( </h1>
+  <p> Please make sure to type in the username correctly. </p>
+  <a href="/home" class="btn btn-info"> Return to Home </a>
+  {% endif %}
+</div>
+
+{% endblock %}

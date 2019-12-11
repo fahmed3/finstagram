@@ -1,0 +1,41 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+<div class="container text-center" style="padding-top:2em">
+
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  {% for message in messages %}
+  {{ message }}  <br>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+		   
+     <h1> View all your groups! </h1> <br>
+
+  <div class="container">
+    <a href="/newgroup" class="btn btn-light btn-outline-info btn-lg btn-block">
+      Create New Group </a>
+    <br>
+    {% for group in groups %}
+    <div class="card bg-white">
+      <div class="card-header bg-info">
+	<h3 style="color:#F3F8F2">{{group.groupName}} </h3> </div>
+      <div class="card-body">
+	<h5 class="card-title">{{group.description}}</h5>
+	<form action="/groupdetails" method="POST">
+	  <button type="submit" name="details"
+		  class="btn btn-light btn-outline-info"
+		  value='{{group.groupOwner}},{{group.groupName}}'>
+	    Details
+	  </button>
+	</form>
+      </div>
+    </div> <br>
+    {% endfor %}
+  </div>
+  
+</div>
+
+{% endblock %}

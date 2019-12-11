@@ -1,26 +1,92 @@
-{% extends "index.html" %}
+
+{% extends "home.html" %}
+
+{% block css %}
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>    
+{% endblock %}
 
 {% block content %}
-<h1>Image Gallery</h1>
-<div class = "container">
-  
-  {% for image in images %}
-  <div class="card" style="width:50%">
-    <h5 class="card-header">{{image.photoPoster}} </h5>
 
-    <img src="/image/{{image.filepath}}" class="card-img-top" alt="...">
-    <div class="card-body">
-      <p class="card-text"> # Likes </p>
-      <h5 class="card-title"> {{ image.photoPoster }} </h5>
-      <p class="card-text"> {{ image.caption }} </p>
-      <p class="card-text"><small class="text-muted">
-	  PhotoID: {{image.photoID}} <br>
-	  {{ image.postingdate }}</small></p>
+{% if details %}
+<script type="text/javascript">
+  console.log("not completely ignoring ya")
+  $(window).on('load',function(){
+      $('#myModal').modal({
+	  show : true,
+          backdrop: 'static',
+          keyboard: false
+      });
+  });
+</script>
+{% endif %}
+  
+
+<div class = "container text-center" style="padding-top:2em">
+
+  <h1>Image Gallery</h1>
+
+  <div class="card-columns">
+    {% for image in images %}
+    <div class="card text-left" >
+      <h5 class="card-header"> {{ image.firstName }} {{ image.lastName}} </h5>
+      <img src="/image/{{image.filepath}}" class="card-img-top" alt="...">
+      <div class="card-body">
+	<form action="/image" method="POST" >
+	  <button type="submit" class="card-text btn btn-link" data-toggle="modal"  name="photoID" value='{{image.photoID}}'>
+	</form>
+	  {{image.numlikes}} Likes, {{image.numtagged}} Tagged  </button>
+
+	<h5 class="card-title"> {{image.photoPoster}} </h5>
+	<p class="card-text"> {{ image.caption }} </p>
+	<p class="card-text"><small class="text-muted" >
+	    PhotoID: {{image.photoID}} <br>
+	    {{ image.postingdate }}</small></p>
+      </div>
     </div>
-  </div>    
-  <!-- <img src="/image/{{image.filepath}}" width="300"/> -->
-  {% endfor %}
+    <br>
+    <!-- <img src="/image/{{image.filepath}}" width="300"/> -->
+    {% endfor %}
+  </div>
+  
+  <!-- Modal -->
+  <div class="modal" id="myModal" tabindex="-1" role="dialog" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+	<div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+	</div>
+	<div class="modal-body text-left">
+	  <div class="row">
+	    <div class="col-6">
+	      <h5> Likes </h5>
+	      {% if likes|length > 0 %}
+	      {% for like in likes %}
+              {{like.username}}, Rating: {{like.rating}} <br>
+	      {% endfor %}
+	      {% else %}
+	      No likes yet.
+	      {% endif %}
+	    </div>
+	    <div class="col-6">
+	      <h5> Tags </h5>
+	      {% if tags|length > 0 %}
+	      {% for tag in tags %}
+              {{tag.username}} <br>
+	      {% endfor %}
+	      {% else %}
+	      No tags for this post.
+	      {% endif %}
+	    </div>
+	  </div>
+	</div>
+	<div class="modal-footer">
+          <a href="/images" class="btn btn-info" >Close</a>
+	</div>
+      </div>
+    </div>
+  </div>
   
 </div>
 <a href="/">Go back</a>
+
 {% endblock %}

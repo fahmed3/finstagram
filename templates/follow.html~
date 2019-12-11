@@ -1,0 +1,12 @@
+{% extends "home.html" %}
+
+{% block content %}
+
+{% for user in data %}
+{{user.username}}<br>
+{{user.firstName}} {{user.lastName}} <br>
+{{user.bio}}
+{% endfor %}
+Do you want to follow this user?
+
+{% endblock %}

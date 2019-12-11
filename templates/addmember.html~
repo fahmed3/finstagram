@@ -1,0 +1,15 @@
+{% extends "home.html" %}
+
+{% block content %}
+<div class="container">
+{% if success %}
+<h1> Success! </h1>
+{% else %}
+<h1> Unsuccessful :( </h1>
+<p> Please make sure you typed in the username correctly. </p>
+{% endif %}
+
+<a href="/groups" class="btn btn-info"> Return to Groups </a>
+
+</div>
+{% endblock %}

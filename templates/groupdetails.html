@@ -1,0 +1,38 @@
+{% extends "home.html" %}
+
+{% block content %}
+<div class="row">  
+  <div class="col-6 text-center" style="padding-top:2em">
+    <h1> Users in {{groupName}} </h1> <br>
+    {% for member in members %}
+    <h5> {{ member.member_username }} </h5> <br>
+    {% endfor %}
+  </div>
+    <div class="col-6" style="padding-left:3em; padding-top:2em">
+      <h1> Add another member </h1> <br>
+      <form action="/addmember" method="POST">
+	<div class="form-row align-items-center">
+	  <div class="col">
+	    <input class="form-control" type="text" name="username" placeholder="Search by username">
+	  </div>
+	  <div class="col">
+	    <button type="submit" name="groupdetails"
+		    class="btn btn-info "
+		    value='{{groupName}}'> Add </button>
+	  </div>
+	</div>	
+      </form>
+
+      {% with messages = get_flashed_messages() %}
+          {% if messages %}
+              {% for message in messages %}
+                  <b style="color:red"> {{ message }} </b>  <br>
+              {% endfor %}
+          {% endif %}
+      {% endwith %}
+      
+    </div>
+
+</div>
+  
+{% endblock %}
