@@ -46,7 +46,12 @@ def home():
     with connection.cursor() as cursor:
         cursor.execute(query, (session["username"]))
     followers = cursor.fetchall()
-    return render_template("home.html", username=session["username"], requests=requests, followers=followers)
+    #get all following
+    query = "SELECT firstName, lastName FROM follow AS f JOIN person AS p ON p.username = f.username_followed WHERE username_follower = %s AND followstatus=1"
+    with connection.cursor() as cursor:
+        cursor.execute(query, (session["username"]))
+    following = cursor.fetchall()
+    return render_template("home.html", username=session["username"], requests=requests, followers=followers, following = following)
 
 @app.route("/groups")
 @login_required

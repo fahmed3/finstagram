@@ -61,35 +61,52 @@
 
   <a href="/upload" class="btn btn-lg btn-info"> Upload an image </a>
     </div>
-    <div class="container col-6" style="border:solid; height:500px; overflow-y:scroll">
-      <h1 class="text-center"> Followers </h1>
-      <h5> Follow Requests: </h5>
-      {% if requests|length > 0%}
-      {% for request in requests %}
-      <form class="form-inline" action="/accept" method="POST" style="border-bottom:1px solid">
-	<div class="form-group" style="padding:15px 30px">
-	  {{request.firstName}} {{request.lastName}}
-	</div>
-	<button type="submit" name="accept" value='{{request.username_follower}}'
-		class="btn btn-outline-info"> Accept </button>
-	<button type="submit" name="decline" value='{{request.username_follower}}'
-		class="btn btn-outline-info"> Decline </button>
-	</form>      
+    <div class="container col-6" style="padding-top:2em">
+      <div class="row">
+	<div class = "col-12" style="border:1px solid gray;height:125px; overflow-y:scroll;padding-top:1em">
+	  <h5> Follow Requests: </h5>
+	  {% if requests|length > 0%}
+	  {% for request in requests %}
+	  <form class="form-inline" action="/accept" method="POST" style="border-bottom:1px solid">
+	    <div class="form-group" style="padding:15px 30px">
+	      {{request.firstName}} {{request.lastName}}
+	    </div>
+	    <button type="submit" name="accept" value='{{request.username_follower}}'
+		    class="btn btn-outline-info"> Accept </button>
+	    <button type="submit" name="decline" value='{{request.username_follower}}'
+		    class="btn btn-outline-info"> Decline </button>
+	  </form>      
 
-      {% endfor %}
-      {% else %}
-      <p style="padding:5px 30px"> <i> No follow requests. </i> </p>
-      {% endif %}
-      
-      <h5> Current Followers: </h5>
-      {% if followers|length > 0 %}
-      {% for follower in followers %}
-      <p style="padding:5px 30px">
-	{{follower.firstName}} {{follower.lastName}}</p>
-      {% endfor %}
-      {% else %}
-      <p style="padding:5px 30px"> <i> You currently have no followers. Invite your friends to join Finsta! </i> </p>
-      {% endif %}
+	  {% endfor %}
+	  {% else %}
+	  <p style="padding:5px 30px"> <i> No follow requests. </i> </p>
+	  {% endif %}
+	</div>
+      </div><br>
+      <div class="row">
+	<div class="col-6" style="border:1px solid gray;height:375px; overflow-y:scroll;padding-top:1em">
+	  <h5> Followers: </h5>
+	  {% if followers|length > 0 %}
+	  {% for follower in followers %}
+	  <p style="padding:5px 30px">
+	    {{follower.firstName}} {{follower.lastName}}</p>
+	  {% endfor %}
+	  {% else %}
+	  <p style="padding:5px 30px"> <i> You currently have no followers. Invite your friends to join Finsta! </i> </p>
+	  {% endif %}
+	</div>
+	<div class="col-6" style="border:1px solid gray;height:375px; overflow-y:scroll;padding-top:1em">
+	  <h5> Following: </h5>
+	  {% if following|length > 0 %}
+	  {% for followee in following %}
+	  <p style="padding:5px 30px">
+	    {{followee.firstName}} {{followee.lastName}}</p>
+	  {% endfor %}
+	  {% else %}
+	  <p style="padding:5px 30px"> <i> You're not following anyone, search for your friends! </i> </p>
+	  {% endif %}
+	</div>
+      </div>
     </div>
   </div>
 
