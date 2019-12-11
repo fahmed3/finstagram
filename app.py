@@ -19,6 +19,10 @@ connection = pymysql.connect(host="localhost",
                              cursorclass=pymysql.cursors.DictCursor,
                              autocommit=True)
 
+global SALT
+SALT = "cs3083"
+
+
 def login_required(f):
     @wraps(f)
     def dec(*args, **kwargs):
@@ -135,8 +139,6 @@ def addmember():
         message = "Please make sure to type in the username correctly." 
         return render_template("addmember.html", success = False, message = message)
 
-
-    #MAKE THIS WORK
 @app.route("/follow", methods=["GET", "POST"])
 @login_required
 def follow():
@@ -254,7 +256,7 @@ def loginAuth():
     if request.form:
         requestData = request.form
         username = requestData["username"]
-        plaintextPasword = requestData["password"]
+        plaintextPasword = requestData["password"] + SALT
         hashedPassword = hashlib.sha256(plaintextPasword.encode("utf-8")).hexdigest()
 
         with connection.cursor() as cursor:
@@ -276,7 +278,7 @@ def registerAuth():
     if request.form:
         requestData = request.form
         username = requestData["username"]
-        plaintextPasword = requestData["password"]
+        plaintextPasword = requestData["password"] + SALT
         hashedPassword = hashlib.sha256(plaintextPasword.encode("utf-8")).hexdigest()
         firstName = requestData["fname"]
         lastName = requestData["lname"]

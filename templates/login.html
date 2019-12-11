@@ -10,7 +10,6 @@ Login
 
 {% block content %}
 <div class="container">
-
   <div class="wrapper">
     <form action="/loginAuth" method="post" class="form-signin">
 
@@ -22,10 +21,13 @@ Login
       <input class="btn btn-lg btn-info btn-block" type="submit" value="Login">
     </form>
   </div>
+
+  <div class="text-center">
+  {% if error %}
+  {{ error }}
+  {% endif %}
+  </div>
   
 </div>
-{% if error %}
-     {{ error }}
-{% endif %}
 
 {% endblock %}

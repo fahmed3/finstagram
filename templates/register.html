@@ -23,9 +23,13 @@
       <input class="btn btn-lg btn-info btn-block" type="submit" value="Register">
     </form>
   </div>
+
+  <div class="text-center">
+    {% if error %}
+    {{ error }}
+    {% endif %}
+  </div>
+  
 </div>
-{% if error %}
-     {{ error }}
-{% endif %}
 
 {% endblock %}
